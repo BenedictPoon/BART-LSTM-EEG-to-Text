@@ -1,0 +1,54 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+eeg_translation_env/
+.ipynb_checkpoints/
+*.log
+
+# IDE/project settings
+.vscode/
+.idea/
+
+# Caches
+.cache/
+.mypy_cache/
+.pytest_cache/
+
+# Data and datasets (do not push large/raw data)
+data/
+datasets/
+ZAB/
+ZAB.7z
+raw_data/
+processed_data/
+
+# Training artifacts and outputs
+checkpoints/
+runs/
+outputs/
+wandb/
+tensorboard/
+logs/
+
+# Model weight files
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# OS archives and temp
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.tmp
+
+
