@@ -1,0 +1,78 @@
+# BART Baseline Model Configuration
+
+# Model Architecture
+model:
+  type: "bart_baseline"
+  eeg_input_size: 105  # Number of EEG channels
+  bart_model_name: "facebook/bart-base"
+  max_length: 512
+  dropout: 0.1
+  use_features: false  # Set to true if using additional EEG features
+  feature_size: 0  # Size of additional features
+
+# Data Configuration
+data:
+  data_dir: "data/processed"
+  batch_size: 32
+  max_length: 512
+  num_workers: 4
+  shuffle: true
+  tokenizer_name: "facebook/bart-base"
+
+# Training Configuration
+training:
+  num_epochs: 50
+  learning_rate: 1e-4
+  weight_decay: 1e-5
+  warmup_steps: 1000
+  gradient_clip_val: 1.0
+  accumulation_steps: 1
+  
+  # Learning rate scheduler
+  scheduler:
+    type: "linear"  # Options: linear, cosine, step
+    warmup_ratio: 0.1
+    
+  # Early stopping
+  early_stopping:
+    patience: 10
+    min_delta: 1e-4
+    
+  # Checkpointing
+  save_every_n_epochs: 5
+  save_best_model: true
+  max_checkpoints: 3
+
+# Validation Configuration
+validation:
+  eval_every_n_epochs: 1
+  metrics: ["loss", "accuracy", "bleu", "rouge"]
+
+# Logging and Monitoring
+logging:
+  log_every_n_steps: 100
+  tensorboard: true
+  wandb: false  # Set to true for Weights & Biases logging
+  project_name: "eeg-translation-bart-baseline"
+  
+# Hardware Configuration
+hardware:
+  device: "auto"  # auto, cpu, cuda
+  mixed_precision: true
+  num_gpus: 1
+  
+# Random Seeds
+random_seed: 42
+
+# Paths
+paths:
+  model_save_dir: "models/saved"
+  logs_dir: "logs"
+  results_dir: "results"
+
+# EEG Processing
+eeg:
+  sampling_rate: 1000  # Hz
+  normalize: true
+  filter_frequencies: [0.5, 100]  # Hz
+  notch_filter: 50  # Hz (for power line noise) 
