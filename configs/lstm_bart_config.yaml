@@ -15,7 +15,7 @@ model:
 # Data Configuration
 data:
   data_dir: "data/processed"
-  batch_size: 32
+  batch_size: 16
   max_length: 512
   num_workers: 4
   shuffle: true
@@ -24,8 +24,8 @@ data:
 # Training Configuration
 training:
   num_epochs: 50
-  learning_rate: 1e-4
-  weight_decay: 1e-5
+  learning_rate: 0.0001
+  weight_decay: 0.00001
   warmup_steps: 1000
   gradient_clip_val: 1.0
   accumulation_steps: 1
@@ -38,7 +38,7 @@ training:
   # Early stopping
   early_stopping:
     patience: 10
-    min_delta: 1e-4
+    min_delta: 0.0001
     
   # Checkpointing
   save_every_n_epochs: 5

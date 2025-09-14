@@ -228,14 +228,21 @@ class LSTMBartModel(nn.Module):
         """Initialize model weights."""
         # Initialize LSTM weights
         for name, param in self.lstm_encoder.named_parameters():
-            if 'weight' in name:
+            if 'weight' in name and param.dim() >= 2:
                 nn.init.xavier_uniform_(param)
             elif 'bias' in name:
                 nn.init.zeros_(param)
         
         # Initialize bridge layer weights
-        nn.init.xavier_uniform_(self.bridge.projection.weight)
+        if self.bridge.projection.weight.dim() >= 2:
+            nn.init.xavier_uniform_(self.bridge.projection.weight)
         nn.init.zeros_(self.bridge.projection.bias)
+        
+        # Initialize feature encoder weights if it exists
+        if self.use_features and hasattr(self, 'feature_encoder'):
+            if self.feature_encoder.weight.dim() >= 2:
+                nn.init.xavier_uniform_(self.feature_encoder.weight)
+            nn.init.zeros_(self.feature_encoder.bias)
         
         logger.info("Model weights initialized")
     
